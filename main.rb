@@ -16,31 +16,37 @@ board = [
   ['□','□','□'],
 ]
 
-# the mark variable stores the mark that will placed on the board next
-# when we start the game, the next mark that will be placed is x
-mark = 'X'
+def inside_board?(board, row, col)
+  row < 3 and row >= 0 and col < 3 and col >= 0
+end
 
-# each turn is one iteration of the loop
-# for now the game never ends
-# later we will check the board to see if someone has won the game
-while true
-  # first ask the player for a row and then a column
-  print "row: "
-  row = gets.chomp.to_i
+def row_win?(board, row, mark)
+  board[row][0] == mark and board[row][1] == mark and board[row][2] == mark
+end
 
-  print "col: "
-  col = gets.chomp.to_i
+def col_win?(board, row, mark)
+  board[0][col] == mark and board[1][col] == mark and board[2][col] == mark
+end
 
-  # update the board
-  board[row][col] = mark
+def left_diag_win?(board, mark)
+  board[0][0] == mark and board[1][1] == mark and board[2][2] == mark
+end
 
-  # show the board to the users after we place a mark on the board
-  print_board(board)
+def right_diag_win?(board, mark)
+  board[0][2] == mark and board[1][1] == mark and board[2][0] == mark
+end
 
-  # after we place the mark on the board switch it to who is next
-  if mark == 'X'
-    mark = 'O'
-  else
-    mark = 'X'
-  end
+def win?(board, mark)
+  row_win?(board, 0, mark) or
+  row_win?(board, 1, mark) or
+  row_win?(board, 2, mark) or
+  col_win?(board, 0, mark) or
+  col_win?(board, 1, mark) or
+  col_win?(board, 2, mark) or
+  right_diag_win?(board, mark) or
+  left_diag_win?(board, mark)
+end
+
+def empty?(board, row, col)
+  board[row][col] != 'X' or board[row][col] != 'O'
 end
