@@ -50,3 +50,18 @@ end
 def empty?(board, row, col)
   board[row][col] != 'X' or board[row][col] != 'O'
 end
+
+def update_board(board, mark)
+    puts "Give a row."
+    row = gets.to_i                                                             #Grab the row
+    puts "Give a column."
+    col = gets.to_i                                                             #Grab the col
+    while inside_board?(row, col) == false or empty?(board, row, col) == false  #While row/col are not inside or not empty...
+        puts "Invalid row or column."
+        puts "Give a row."
+        row = gets.to_i                                                         #Grab the row
+        puts "Give a column."
+        col = gets.to_i                                                         #Grab the col
+    end
+    board[row][col] = mark
+end
