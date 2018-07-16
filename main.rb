@@ -24,7 +24,7 @@ def row_win?(board, row, mark)
   board[row][0] == mark and board[row][1] == mark and board[row][2] == mark
 end
 
-def col_win?(board, row, mark)
+def col_win?(board, col, mark)
   board[0][col] == mark and board[1][col] == mark and board[2][col] == mark
 end
 
@@ -56,7 +56,7 @@ def update_board(board, mark)
     row = gets.to_i                                                             #Grab the row
     puts "Give a column."
     col = gets.to_i                                                             #Grab the col
-    while inside_board?(row, col) == false or empty?(board, row, col) == false  #While row/col are not inside or not empty...
+    while inside_board?(board, row, col) == false or empty?(board, row, col) == false  #While row/col are not inside or not empty...
         puts "Invalid row or column."
         puts "Give a row."
         row = gets.to_i                                                         #Grab the row
@@ -65,3 +65,34 @@ def update_board(board, mark)
     end
     board[row][col] = mark
 end
+
+def computer_update(board, mark)
+  row = rand(3)
+  col = rand(3)
+  while inside_board?(board, row, col) == false or empty?(board, row, col) == false
+    row = rand(3)
+    col = rand(3)
+  end
+  board[row][col] = mark
+end
+
+def play(board)
+    puts 'Player X, go first.'
+    while true
+      update_board(board, 'X')
+      print_board(board)
+      if win?(board, 'X') == true
+        puts "X won!"
+        exit
+      end
+      # update_board(board, 'O')
+      computer_update(board, 'O')
+      print_board(board)
+      if win?(board, 'O') == true
+        puts "O won!"
+        exit
+      end
+    end
+end
+
+play(board)
